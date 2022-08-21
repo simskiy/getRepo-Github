@@ -10,16 +10,21 @@ html {
   font-size: $font-size;
 }
 
-.gg {
+#gg-app {
   width: 500px;
   padding: 50px;
   background-color: $bg-color;
+  .input-wrapper {
+    position: relative;
+  }
+
   .gg-input {
     box-sizing: border-box;
     font-size: 4rem;
     padding: 5px 10px;
     width: 100%;
     border: none;
+    height: 70px;
 
     &::placeholder {
       font-size: 3rem;
@@ -28,6 +33,9 @@ html {
   }
 
   .found-repo {
+    position: absolute;
+    width: 100%;
+    top: 70px;
     font-size: 2.5rem;
     list-style: none;
     padding: 0;
@@ -49,6 +57,7 @@ html {
       }
     }
   }
+
   .repo-list {
     margin: 0;
     padding: 0;

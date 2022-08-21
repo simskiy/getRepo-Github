@@ -9,6 +9,8 @@
 	"rules": {
 		"semi": "off",
 		"comma-dangle":"off",
-		"require-jsdoc":"off"
+		"require-jsdoc":"off",
+    "max-len": "off",
+    "guard-for-in": "off"
 	}
 }

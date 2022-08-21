@@ -1,6 +1,7 @@
 import './styles/main.scss'
-import '@js/sum.js'
+import '@js/InputComponent'
+import {GetRepo} from './js/GetRepo'
 
-
-// eslint-disable-next-line quotes
-console.log("it's working!!!")
+const el = document.querySelector('#gg-app')
+const gg = new GetRepo(el)
+gg.render()
