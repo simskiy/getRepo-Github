@@ -4,13 +4,13 @@ export class FoundRepoComponent {
     this.listFoundRepo = document.createElement('ul')
     this.listFoundRepo.classList.add('found-repo')
     this.observer = observer
-    this.addItems()
     this.listFoundRepo.addEventListener('click', (e) => {
       this.observer.emit('input:select', this.items[e.target.dataset.item])
     })
+    this.subscribeListeners()
   }
 
-  addItems() {
+  subscribeListeners() {
     this.observer.subscribe('input:request', (data) => {
       const result = []
       data.forEach((item) => result.push([item.name, item.owner.login, item.stargazers_count]))
