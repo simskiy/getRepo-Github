@@ -1,23 +1,32 @@
 import {CardComponent} from './CardComponent'
 
 export class ListCardsComponent {
-  constructor(observer) {
+  constructor(params) {
     this.cards = []
     this.list = document.createElement('ul')
     this.list.classList.add('repo-list')
-    this.observer = observer
+    this.observer = params.observer
   }
 
-  render() {
+  createItems() {
     this.cards.forEach((card, ind) => {
       card.dataset.card = ind
       this.list.append(card)
     })
+  }
+
+  initObserver() {
+
+  }
+
+  render() {
+    this.initObserver()
+    this.createItems()
     return this.list
   }
 
-  addCard() {
-    const card = new CardComponent(this.values)
-    this.cards.push(card)
+  addCard(params) {
+    const card = new CardComponent(params)
+    this.cards.push(card.createItem())
   }
 }

@@ -1,8 +1,27 @@
 export class FoundRepoComponent {
-  constructor() {
+  constructor(observer) {
     this.items = []
     this.listFoundRepo = document.createElement('ul')
     this.listFoundRepo.classList.add('found-repo')
+    this.observer = observer
+    this.addItems()
+    this.listFoundRepo.addEventListener('click', (e) => {
+      this.observer.emit('input:select', this.items[e.target.dataset.item])
+    })
+  }
+
+  addItems() {
+    this.observer.subscribe('input:request', (data) => {
+      const result = []
+      data.forEach((item) => result.push([item.name, item.owner.login, item.stargazers_count]))
+      this.items = result
+      this.removeItems()
+      return this.render()
+    })
+  }
+
+  removeItems() {
+    this.listFoundRepo.innerHTML = ''
   }
 
   createItems() {
@@ -10,7 +29,7 @@ export class FoundRepoComponent {
       const li = document.createElement('li')
       li.classList.add('found-repo_item')
       li.dataset.item = ind
-      li.textContent = item
+      li.textContent = item[0]
       this.listFoundRepo.append(li)
     })
   }
