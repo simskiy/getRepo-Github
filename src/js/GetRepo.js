@@ -14,8 +14,4 @@ export class GetRepo {
     this.el.append(this.inputElement.render())
     this.el.append(this.listCardsComponent.render())
   }
-  // addItems(items) {
-  // this.inputElement.addItems(items)
-  // console.log(items)
-  // }
 }

@@ -16,12 +16,7 @@ export class ListCardsComponent {
   }
 
   initObserver() {
-    // this.observer.subscribe('input:request', (data) => {
-    //   const result = []
-    //   data.forEach((item) => result.push([item.name, item.owner.login, item.stargazers_count]))
-    //   result.forEach((card) => this.addCard(card))
-    //   this.createItems()
-    // })
+
   }
 
   render() {

@@ -5,6 +5,9 @@ export class FoundRepoComponent {
     this.listFoundRepo.classList.add('found-repo')
     this.observer = observer
     this.addItems()
+    this.listFoundRepo.addEventListener('click', (e) => {
+      this.observer.emit('input:select', this.items[e.target.dataset.item])
+    })
   }
 
   addItems() {

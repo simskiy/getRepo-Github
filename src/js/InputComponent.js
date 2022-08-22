@@ -13,25 +13,36 @@ export class InputComponent {
     this.observer = params.observer
     this.inputElement.addEventListener('change', this.search.bind(this))
     this.list = this.foundRepoComponent.render()
+
     this.observer.subscribe('input:request', () => {
-      // this.list.replaceWith()
       this.list.remove()
       this.inputWrapper.append(this.list)
     })
+    this.observer.subscribe('input:select', () => {
+      this.list.remove()
+      this.inputElement.value = null
+    })
   }
 
-  setElements() {
+  setComponent() {
     for (const param in this.params) {
       this.inputElement[param] = this.params[param]
     }
     this.inputWrapper.classList.add('input-wrapper')
-  }
 
-  cteateComponent() {
+    this.observer.subscribe('input:request', () => {
+      this.list.remove()
+      this.inputWrapper.append(this.list)
+    })
+
+    this.observer.subscribe('input:select', () => {
+      this.list.remove()
+      this.inputElement.value = null
+    })
   }
 
   render() {
-    this.setElements()
+    this.setComponent()
     this.inputWrapper.append(this.inputElement)
     this.inputWrapper.append(this.list)
     return this.inputWrapper
