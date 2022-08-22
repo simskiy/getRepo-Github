@@ -6,27 +6,35 @@ export class ListCardsComponent {
     this.list = document.createElement('ul')
     this.list.classList.add('repo-list')
     this.observer = params.observer
+    this.subscribeListeners()
+  }
+
+  subscribeListeners() {
+    this.observer.subscribe('input:select', (data) => {
+      this.addCard(data)
+      this.createItems()
+    })
+    this.observer.subscribe('card:close', (data) => {
+      this.cards.splice(data, 1)
+      this.createItems()
+    })
   }
 
   createItems() {
+    this.list.innerHTML = null
     this.cards.forEach((card, ind) => {
       card.dataset.card = ind
       this.list.append(card)
     })
   }
 
-  initObserver() {
-
-  }
-
   render() {
-    this.initObserver()
     this.createItems()
     return this.list
   }
 
   addCard(params) {
-    const card = new CardComponent(params)
+    const card = new CardComponent({values: params, observer: this.observer})
     this.cards.push(card.createItem())
   }
 }

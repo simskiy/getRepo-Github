@@ -40,6 +40,7 @@ html {
     list-style: none;
     padding: 0;
     margin: 0;
+    z-index: 1;
 
     &_item {
       cursor: pointer;

@@ -13,18 +13,26 @@ export class InputComponent {
     this.observer = params.observer
     this.inputElement.addEventListener('change', this.search.bind(this))
     this.list = this.foundRepoComponent.render()
+    this.subscribeListeners()
+  }
 
+  subscribeListeners() {
     this.observer.subscribe('input:request', () => {
       this.list.remove()
       this.inputWrapper.append(this.list)
     })
+
     this.observer.subscribe('input:select', () => {
       this.list.remove()
       this.inputElement.value = null
+      this.inputElement.focus()
     })
+
+    this.observer.subscribe('card:close', () => this.inputElement.focus())
   }
 
   setComponent() {
+    this.inputElement.setAttribute('autofocus', true)
     for (const param in this.params) {
       this.inputElement[param] = this.params[param]
     }
