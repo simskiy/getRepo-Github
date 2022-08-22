@@ -1,41 +1,52 @@
 import {FoundRepoComponent} from './FoundRepoComponent'
 
 export class InputComponent {
-  constructor(observer) {
+  constructor(params) {
     this.inputWrapper = document.createElement('div')
-    this.input = document.createElement('input')
+    this.inputElement = document.createElement('input')
     this.params = {
       type: 'text',
       placeholder: 'Введите имя репозитория',
       className: 'gg-input'
     }
-    this.foundRepoComponent = new FoundRepoComponent()
-    this.observer = observer
+    this.foundRepoComponent = new FoundRepoComponent(params.observer)
+    this.observer = params.observer
+    this.inputElement.addEventListener('change', this.search.bind(this))
+    this.list = this.foundRepoComponent.render()
+    this.observer.subscribe('input:request', () => {
+      // this.list.replaceWith()
+      this.list.remove()
+      this.inputWrapper.append(this.list)
+    })
   }
 
-  get value() {
-    return this.input.value
-  }
-
-  set value(data) {
-    this.input.value = data
-  }
-
-  createWrapper() {
-    this.inputWrapper.classList.add('input-wrapper')
+  setElements() {
     for (const param in this.params) {
-      this.input[param] = this.params[param]
+      this.inputElement[param] = this.params[param]
     }
-    this.inputWrapper.append(this.input)
-    this.inputWrapper.append(this.createList())
+    this.inputWrapper.classList.add('input-wrapper')
   }
 
-  createList() {
-    return this.foundRepoComponent.render()
+  cteateComponent() {
   }
 
   render() {
-    this.createWrapper()
+    this.setElements()
+    this.inputWrapper.append(this.inputElement)
+    this.inputWrapper.append(this.list)
     return this.inputWrapper
+  }
+
+  async search() {
+    const url = `https://api.github.com/search/repositories?q=${this.inputElement.value}`
+    return await fetch(url).then((response) => {
+      if (response.ok) {
+        response.json().then((res) => {
+          this.observer.emit('input:request', res.items.splice(0, 5))
+        })
+      } else {
+        console.log('request failed')
+      }
+    })
   }
 }

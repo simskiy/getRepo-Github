@@ -1,6 +1,6 @@
 export class CardComponent {
   constructor(params) {
-    this.values = [params.name, params.owner, params.stars]
+    this.values = params
     this.params = {
       itemClass: 'repo-list_item',
       tableClass: 'card',
@@ -12,12 +12,12 @@ export class CardComponent {
   createItem() {
     const item = createElem('li', this.params.itemClass)
     const table = createElem('table', this.params.tableClass)
-    const row = createElem('tr', this.params.trClass)
     item.append(table)
-    table.append(row)
     this.params.tdValue.forEach((item, ind) => {
-      const td1 = this.createElem('td', null, this.params.tdValue[ind])
-      const td2 = this.createElem('td', null, this.values[ind])
+      const row = createElem('tr', this.params.trClass)
+      const td1 = createElem('td', null, item)
+      const td2 = createElem('td', null, this.values[ind])
+      table.append(row)
       row.append(td1, td2)
     })
     return item
