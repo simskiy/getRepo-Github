@@ -11,7 +11,7 @@ export class InputComponent {
     }
     this.foundRepoComponent = new FoundRepoComponent(params.observer)
     this.observer = params.observer
-    this.inputElement.addEventListener('change', this.search.bind(this))
+    this.inputElement.addEventListener('input', this.search.apply(this))
     this.list = this.foundRepoComponent.render()
     this.subscribeListeners()
   }
@@ -56,7 +56,17 @@ export class InputComponent {
     return this.inputWrapper
   }
 
-  async search() {
+  search(fn = this.request) {
+    let timer = null
+    return (...args) => {
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        fn.apply(this, args)
+      }, 300)
+    }
+  }
+
+  async request() {
     const url = `https://api.github.com/search/repositories?q=${this.inputElement.value}`
     return await fetch(url).then((response) => {
       if (response.ok) {

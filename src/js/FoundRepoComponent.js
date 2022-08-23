@@ -3,6 +3,7 @@ export class FoundRepoComponent {
     this.items = []
     this.listFoundRepo = document.createElement('ul')
     this.listFoundRepo.classList.add('found-repo')
+    this.listFoundRepo.setAttribute('tabIndex', 1)
     this.observer = observer
     this.listFoundRepo.addEventListener('click', (e) => {
       this.observer.emit('input:select', this.items[e.target.dataset.item])
