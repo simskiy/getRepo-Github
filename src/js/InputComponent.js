@@ -75,6 +75,7 @@ export class InputComponent {
         })
       } else {
         console.log('request failed')
+        this.inputElement.value = null
       }
     })
   }
